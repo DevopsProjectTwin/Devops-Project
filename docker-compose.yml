@@ -4,7 +4,6 @@ services:
     
   Achat:
     container_name: achat
-    build: ./achat
     ports:
       - "8082:8082"   
     environment:
