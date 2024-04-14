@@ -24,7 +24,7 @@ services:
         - MYSQL_ROOT_PASSWORD=root  #indisponsable pour la conteneurisation
         #- MYSQL_DATABASE=job
       volumes:
-      - mysql-data:/var/lib/mysql  
+        - db:/var/lib/mysql
       ports:
         - "3306:3306"
       restart: unless-stopped 
