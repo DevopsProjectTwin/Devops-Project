@@ -1,7 +1,7 @@
 version: "3.9"
 services:
   
-    
+
   Achat:
     container_name: achat
     build: ./achat
@@ -12,8 +12,8 @@ services:
       - SPRING_DATASOURCE_USERNAME=root
       - SPRING_DATASOURCE_PASSWORD=root
 
-    image: "achat"
-    restart: unless-stopped
+    image: fatmaabid433/achat-docker:1.0.0
+    restart: on-failure
     depends_on:
       - db-mysql
 
