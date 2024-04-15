@@ -1,33 +1,27 @@
-version: "3.9"
+version: "3.8"
 services:
-  
-    
-  Achat:
-    container_name: achat
-    ports:
-      - "8082:8082"   
+  mysqldb:
+    image: "mysql:5.6"
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:mysql://localhost:3306/achatdb?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=achatdb
+    ports:
+      - "3306:3306"
+    restart: unless-stopped
+    volumes:
+      - db:/var/lib/mysql
+  app-achat:
+    image: "emnakhiari893/achat:1.0"
+    ports:
+      - "8089:8089"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysqldb:3306/achatdb?createDatabaseIfNotExist=true
       - SPRING_DATASOURCE_USERNAME=root
       - SPRING_DATASOURCE_PASSWORD=root
-
-    image: "achat"
     restart: unless-stopped
     depends_on:
-      - db-mysql
-
-  
-  db-mysql:
-      image: "mysql:5.6"
-      container_name: db-mysql 
-      environment:
-        - MYSQL_ROOT_PASSWORD=root  #indisponsable pour la conteneurisation
-        #- MYSQL_DATABASE=job
-      volumes:
-        - /home/vagrant/mysql_data:/var/lib/mysql
-      ports:
-        - "3306:3306"
-      restart: unless-stopped 
-
-
-  
+      - mysqldb
+    stdin_open: true
+    tty: true
+volumes:
+  db:
