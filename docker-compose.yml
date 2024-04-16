@@ -16,6 +16,15 @@ services:
     depends_on:
       - db-mysql
 
+
+  Front:
+    container_name: front
+    ports:
+      - "4200:4200"
+
+    image: "front"
+    restart: unless-stopped
+
   
   db-mysql:
       image: "mysql:5.6"
