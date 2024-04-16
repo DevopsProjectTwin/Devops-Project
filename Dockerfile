@@ -1,10 +1,10 @@
-# Utilisez une image de base Node.js
-FROM node:14-alpine as builder
+# Utilisez une image de base contenant Node.js
+FROM node:latest
 
 # Définissez le répertoire de travail dans le conteneur
-WORKDIR /app
+WORKDIR /usr/src/app
 
-# Copiez le package.json et le package-lock.json dans le conteneur
+# Copiez le package.json et package-lock.json (si présent)
 COPY package*.json ./
 
 # Installez les dépendances du projet
@@ -16,14 +16,8 @@ COPY . .
 # Construisez l'application Angular pour la production
 RUN npm run build --prod
 
-# Stage final : utilisez une image légère Nginx pour servir l'application construite
-FROM nginx:1.21-alpine
+# Exposez le port sur lequel l'application Angular fonctionne (8089 dans votre cas)
+EXPOSE 8085
 
-# Copiez les fichiers de l'application construite depuis le builder stage dans l'image Nginx
-COPY --from=builder /app/dist/crudtuto-front /usr/share/nginx/html
-
-# Exposez le port sur lequel Nginx fonctionne
-EXPOSE 85
-
-# Commande pour démarrer Nginx lorsqu'un conteneur est lancé
-CMD ["nginx", "-g", "daemon off;"]
+# Commande pour démarrer l'application Angular
+CMD ["npm", "start"]
