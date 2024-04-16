@@ -24,8 +24,8 @@ services:
     environment:
       - MYSQL_ROOT_PASSWORD=root  #indisponsable pour la conteneurisation
       #- MYSQL_DATABASE=job
-    volumes:
-      - mysql-data:/var/lib/mysql
+  volumes:
+    - /home/vagrant/mysql_data:/var/lib/mysql
     ports:
       - "3306:3306"
     restart: unless-stopped
