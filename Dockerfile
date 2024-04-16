@@ -1,11 +1,8 @@
 # Utilisez une image de base contenant Node.js
-FROM node:latest
+FROM node:latest as angular
 
 # Définissez le répertoire de travail dans le conteneur
-WORKDIR /usr/src/app
-
-# Copiez le package.json et package-lock.json (si présent)
-COPY package*.json ./
+WORKDIR /app
 
 # Installez les dépendances du projet
 RUN npm install
@@ -14,10 +11,11 @@ RUN npm install
 COPY . .
 
 # Construisez l'application Angular pour la production
-RUN npm run build --prod
+RUN npm run build 
 
-# Exposez le port sur lequel l'application Angular fonctionne (8089 dans votre cas)
-EXPOSE 8085
+FROM httpd:latest
 
-# Commande pour démarrer l'application Angular
-CMD ["npm", "start"]
+WORKDIR /usr/local/apache2/htdocs
+
+COPY --from=angular /app/dist/crudtuto-front .
+
