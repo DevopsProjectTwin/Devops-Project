@@ -4,6 +4,7 @@ services:
 
   Achat:
     container_name: achat
+    build: ./achat
     ports:
       - "8082:8082"
     environment:
@@ -24,8 +25,11 @@ services:
       - MYSQL_ROOT_PASSWORD=root  #indisponsable pour la conteneurisation
       #- MYSQL_DATABASE=job
     volumes:
-      - /home/vagrant/mysql_data:/var/lib/mysql
+      - mysql-data:/var/lib/mysql
     ports:
       - "3306:3306"
     restart: unless-stopped
 
+
+  volumes:
+    mysql-data:
