@@ -1,6 +1,6 @@
 version: "3.9"
 services:
-  
+
 
   Achat:
     container_name: achat
@@ -17,7 +17,7 @@ services:
     depends_on:
       - db-mysql
 
-  
+
   db-mysql:
     image: "mysql:5.6"
     container_name: db-mysql
@@ -30,5 +30,6 @@ services:
       - "3306:3306"
     restart: unless-stopped
 
-  
-  
+
+  volumes:
+    mysql-data:
