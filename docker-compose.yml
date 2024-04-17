@@ -3,8 +3,8 @@ services:
   Achat:
     container_name: achat
     build:
-      context: ./achat
-      dockerfile: ./Dockerfile
+      context: .
+      dockerfile: Dockerfile
     ports:
       - "8082:8082"
     environment:
